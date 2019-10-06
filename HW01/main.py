@@ -38,7 +38,7 @@ def plot(x1,b,parameters_rlse,parameters_newton):
 
 
 ''' A's dtype must be float!!! 
-    I stuck for this wasting me 2hr...'''
+    I stuck on this wasting me 2hr...'''
 ''' only one feature:x1 '''
 x1=[]
 y=[]
