@@ -1,7 +1,7 @@
 import math
 from mode.util import *
 
-def get_pixvalueProb_continuous(train_x,train_y):
+def get_pixvalueProb_continuous(train_x,train_y,eps_var):
     '''
     get pixvalue_prob conditional on class&dim
     :param train_x: (60000,784) ndarray
@@ -14,19 +14,19 @@ def get_pixvalueProb_continuous(train_x,train_y):
         A = train_x[train_y == c]
         for i in range(28*28):
             mu = get_mu(A[:, i])
-            var = get_variance(A[:, i])
+            var = get_variance(A[:, i],eps_var)
             for j in range(256):
                 re[c,i,j] =gaussain_prob(j,mu,var)
     return re
 
-def test_continuous(pics,pixvalueProb,prior,test_x,test_y):
+def test_continuous(pics,pixvalueProb,prior,test_x,test_y,eps_prob):
     error = 0
     for i in range(pics):
         probs = np.zeros(10)
         for c in range(10):
             # posterior probability
             for d in range(28 * 28):  # tally likelihood(assume naive Baye's)
-                probs[c] += np.log(max(1e-4,pixvalueProb[c, d, int(test_x[i, d])]))
+                probs[c] += np.log(max(eps_prob,pixvalueProb[c, d, int(test_x[i, d])]))
                 #print(test_x[i, d],' ',pixvalueProb[c, d, int(test_x[i, d])],' ',np.log(max(1e-4,pixvalueProb[c, d, int(test_x[i, d])])))
             probs[c] += np.log(prior[c])
         # normalized
@@ -45,9 +45,9 @@ def test_continuous(pics,pixvalueProb,prior,test_x,test_y):
 def get_mu(array):
     return np.mean(array)
 
-def get_variance(array):
+def get_variance(array,eps_var):
     var=np.var(array)
-    return var if var!=0 else 1e-4 #avoid Gaussian formula divided by zero
+    return var if var!=0 else eps_var #avoid Gaussian formula divided by zero
 
 def gaussain_prob(x,mu,var):
     return ((1/math.sqrt(2*math.pi*var))*math.exp((-(x-mu)**2)/(2*var)))

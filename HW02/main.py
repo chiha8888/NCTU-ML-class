@@ -21,9 +21,13 @@ if __name__=='__main__':
         test_discrete(len(test_y), pixvalueProb,prior, test_x, test_y)
         print_imagination_numbers(pixvalueProb,16)
     else:
-        pixvalueProb=get_pixvalueProb_continuous(train_x,train_y)
+        eps_var=10 #larger ther better
+        eps_prob=1e-30#samller the better
+
+        pixvalueProb=get_pixvalueProb_continuous(train_x,train_y,eps_var)
         prior=get_prior(train_y)
-        test_continuous(len(test_y),pixvalueProb,prior,test_x,test_y)
+        print('eps_var:{},eps_prob:{}'.format(eps_var,eps_prob))
+        test_continuous(len(test_y),pixvalueProb,prior,test_x,test_y,eps_prob)
         print_imagination_numbers(pixvalueProb,128)
 
 
