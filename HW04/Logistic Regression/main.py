@@ -36,10 +36,10 @@ print_w(w)
 print_confusion_matrix(matrix)
 plot(C0_predict,C1_predict,'Gradient descent')
 
+
 #newton's method
 w=np.random.rand(3,1)
 w=run_newton(A,w,b,lr=0.001)
-
 
 #print
 print('\n----------------------------------------')
