@@ -15,6 +15,7 @@ diff=100
 while diff>1:
     #E-step (calculate posterior)
     W=update_posterior(A,L,P)
+    '''
     #print(W)
     #M-step (update L,P)
     L_new=update_lambda(W)
@@ -23,3 +24,4 @@ while diff>1:
     print('diff: ',diff)
     L=L_new
     P=P_new
+    '''

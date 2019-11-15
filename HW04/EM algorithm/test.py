@@ -7,7 +7,8 @@ def add(M):
 
 M=np.random.rand(3,3)
 print(M)
-M[np.argwhere(M>0.5)]=1
+#M[np.argwhere(M>0.5)]=1
+M=np.asarray(M>0.5,dtype='uint8')
 print(M)
 '''
 weight=np.array([[1,2,3]])

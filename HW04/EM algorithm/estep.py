@@ -2,8 +2,6 @@ import numpy as np
 import math
 import traceback
 from multiprocessing import Pool
-from multiprocessing import shar
-
 
 def handle_error(e):
     traceback.print_exception(type(e),e,e.__context__)
@@ -42,6 +40,7 @@ def update_posterior(X_train,Lambda,Posterior):
     :param Posterior: (10,784,2)
     :return: (60000,10)
     '''
+    '''
     W = np.zeros((60000, 10))
     size=100
     with Pool(processes=8) as p:
@@ -54,6 +53,7 @@ def update_posterior(X_train,Lambda,Posterior):
         p.join()
         print('waiting for join......')
     '''
+
     W=np.zeros((60000,10))
     for k in range(10):
         tmp_list=np.zeros(10)
@@ -66,9 +66,7 @@ def update_posterior(X_train,Lambda,Posterior):
         tmp_list /= np.sum(tmp_list) #normalized align classes
         W[i]=tmp_list
         print('W {} row finish'.format(i))
-    '''
 
-    print('W')
     print(W[:2])
     return W
 
