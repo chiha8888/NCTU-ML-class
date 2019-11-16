@@ -10,14 +10,11 @@ def init_lambda():
     re=re/np.sum(re)
     return re
 
-def init_P():
+def init_P(A,b):
     '''
-    P[i,j,0]= pixel value==0 prob in class i's jth feature distribution
-    P[i,j,1]= pixel value==1 prob in class i's jth feature distribution
-    P[i,j,0]+P[i,j,1]=1 (for every i,j)
-    :return: (10,784,2) matrix
+    P[i,j]: pixel value==1 prob in class i's jth feature distribution
+    :return: (10,784) matrix
     '''
-    re=np.empty((10,784,2))
-    re[:,:,0]=np.random.rand(10,784)
-    re[:,:,1]=1-re[:,:,0]
+    re=np.random.rand(10,784)
+
     return re
