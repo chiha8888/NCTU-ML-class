@@ -6,7 +6,7 @@ def init_lambda():
     sum(lambda)=1
     :return: (10,1) matrix
     '''
-    re=np.random.rand(10,1)
+    re=np.random.rand(10)
     re=re/np.sum(re)
     return re
 

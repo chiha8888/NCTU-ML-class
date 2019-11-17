@@ -7,7 +7,7 @@ from discrete import get_pixvalueProb_discrete,plot_discrete
 from match import perfect_matching
 from utilPlot import *
 
-eps=1e-3
+eps=1
 
 A,b=load()
 
@@ -15,8 +15,7 @@ A,b=load()
 L=init_lambda()
 P=init_P(A,b) # Distribution(784-dim) of each class
 
-diff=100
-last_diff=1000
+last_diff,diff,count=1000,100,0
 while abs(last_diff-diff)>eps and diff>eps:
     #E-step (calculate posterior)
     W=update_posterior(A,L,P)
@@ -30,12 +29,14 @@ while abs(last_diff-diff)>eps and diff>eps:
     print('diff: ',diff)
     L=L_new
     P=P_new
+    count+=1
 
 
-#take a view of classes belonging
+#take a view of classes belonging (but not exactly class)
 maxs=np.argmax(W,axis=1)
 unique,counts=np.unique(maxs,return_counts=True)
 print(dict(zip(unique,counts)))
+print('Lambda:',L.reshape(1,-1))
 
 #plot classes predict & confusion matrix
 GT_distribution=get_pixvalueProb_discrete(A,b)
@@ -45,4 +46,5 @@ plot_discrete(distribution)
 class_order=perfect_matching(GT_distribution,P)
 
 plot(P,class_order,threshold=0.35)
-confusion_matrix(b,maxs)
+confusion_matrix(b,maxs,class_order)
+print_error_rate(count,b,maxs,class_order)

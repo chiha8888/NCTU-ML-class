@@ -23,7 +23,7 @@ def update_posterior(X_train,Lambda,Distribution):
 
     #normalized each row negative values to [0,1] & sum=1
     mins=np.min(W,axis=1).reshape(-1,1)
-    W=(W-mins)
+    W=W-mins
     sums=np.sum(W,axis=1).reshape(-1,1)
     W=W/sums
 

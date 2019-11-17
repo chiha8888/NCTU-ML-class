@@ -14,13 +14,15 @@ def plot(Distribution,classes_order,threshold):
         plot_pattern(Pattern[classes_order[i]])
     return
 
-def confusion_matrix(real,predict):
+def confusion_matrix(real,predict,classes_order):
     '''
     :param real: (60000)
     :param predict: (60000)
+    :param classes_order: (10)
     :return:
     '''
-    for c in range(10):
+    for i in range(10):
+        c=classes_order[i]
         TP,FN,FP,TN=0,0,0,0
         for i in range(60000):
             if real[i]!=c and predict[i]!=c:
@@ -32,6 +34,22 @@ def confusion_matrix(real,predict):
             else:
                 FN+=1
         plot_confusion_matrix(c,TP,FN,FP,TN)
+
+def print_error_rate(count,real,predict,classes_order):
+    '''
+    :param count: int
+    :param real: (60000)
+    :param predict: (60000)
+    :param classes_order: (10)
+    :return:
+    '''
+    print('Total iteration to converge: {}'.format(count))
+    real_transform=np.zeros(60000)
+    for i in range(60000):
+        real_transform[i]=classes_order[real[i]]
+    error=np.count_nonzero(real_transform-predict)
+    print('Total error rate: {}'.format(error/60000))
+
 
 
 def plot_confusion_matrix(c,TP,FN,FP,TN):
