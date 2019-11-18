@@ -1,8 +1,10 @@
 import numpy as np
 from sklearn.cluster import KMeans
 
-a=np.random.random((3,5))
-print('\t','HHH')
+M=np.random.random((3,3))
+print(M)
+a=np.asarray([0,1,2])
+print(M*a)
 
 
 '''

@@ -27,6 +27,7 @@ while abs(last_diff-diff)>eps and diff>eps:
     last_diff=diff
     diff=np.sum(np.abs(L-L_new))+np.sum(np.abs(P-P_new))
     print('diff: ',diff)
+    print('Lambda:',L_new.reshape(1,-1)[0])
     L=L_new
     P=P_new
     count+=1
