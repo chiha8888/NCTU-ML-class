@@ -1,5 +1,7 @@
 import numpy as np
 
+eps=1e-30
+
 def update_lambda(W):
     '''
     :param W: (60000,10)
@@ -19,6 +21,7 @@ def update_distribution(A,W):
     '''
     #normalized W
     sums = np.sum(W,axis=0)
+    sums[sums==0] = 1
     W_normalized = W/sums
     P=A.T@W_normalized
 
