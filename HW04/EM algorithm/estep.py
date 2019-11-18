@@ -1,6 +1,5 @@
 import numpy as np
 
-eps=1e-30
 
 def update_posterior(X_train,Lambda,Distribution):
     '''
