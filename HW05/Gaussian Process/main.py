@@ -7,12 +7,12 @@ x,y=load_data()
 beta=5
 
 #kernel
-k=get_kernel(x,beta)
+K=kernel(x,x)+1/beta*np.identity(len(x))
 
 # mean and variance in range[-60,60]
 x_line=np.linspace(-60,60,num=500)
-mean_predict=get_mus(x_line,x,y,k)
-variance_predict=get_vars(x_line,x,k,beta)
+mean_predict=get_mus(x_line,x,y,K)
+variance_predict=get_vars(x_line,x,K,beta)
 
 #plot
 plt.plot(x,y,'bo')

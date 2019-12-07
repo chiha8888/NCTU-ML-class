@@ -13,27 +13,18 @@ def load_data(path='input.data'):
     y=np.asarray(y)
     return x,y
 
-def get_kernel(x,beta):
+def kernel(X1,X2,alpha=1,length_scale=1):
     '''
-    :param x: x_points
-    :param beta: a noise scalar
-    return: (n,n) kernel ndarray computed from datapoints
+    using rational quadratic kernel function: k(x_i, x_j) = (1 + (x_i-x_j)^2 / (2*alpha * length_scale^2))^-alpha
+    :param X1: (m,d) ndarray
+    :param X2: (n,d) ndarray
+    return: (m,n) kernel ndarray
     '''
-    n=len(x)
-    kernel=np.zeros((n,n))
-    for i in range(n):
-        for j in range(i+1,n):
-            kernel[i,j]=kernel[j,i]=kernel_function(x[i],x[j])
-    kernel=kernel+(1/beta)*np.identity(n)
+    sqdist = np.sum(X1 ** 2, 1).reshape(-1, 1) + np.sum(X2 ** 2, 1) - 2 * np.dot(X1, X2.T)
+    kernel = (1+sqdist**2/(2*alpha*length_scale**2))**-alpha
+
     return kernel
 
-def kernel_function(a,b,alpha=1,length_scale=1):
-    '''
-    using rational quadratic kernel: k(x_i, x_j) = (1 + (x_i-x_j)^2 / (2*alpha * length_scale^2))^-alpha
-    :return: a scalar
-    '''
-    cov = np.power((1+(np.power(a-b,2)/(2*alpha*length_scale**2))),-alpha)
-    return cov
 
 def get_mus(x_line,x,y,kernel):
     '''
