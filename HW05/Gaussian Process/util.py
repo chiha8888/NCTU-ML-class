@@ -16,42 +16,29 @@ def load_data(path='input.data'):
 def kernel(X1,X2,alpha=1,length_scale=1):
     '''
     using rational quadratic kernel function: k(x_i, x_j) = (1 + (x_i-x_j)^2 / (2*alpha * length_scale^2))^-alpha
-    :param X1: (m,d) ndarray
-    :param X2: (n,d) ndarray
-    return: (m,n) kernel ndarray
+    :param X1: (n) ndarray
+    :param X2: (m) ndarray
+    return: (n,m)  ndarray
     '''
-    sqdist = np.sum(X1 ** 2, 1).reshape(-1, 1) + np.sum(X2 ** 2, 1) - 2 * np.dot(X1, X2.T)
-    kernel = (1+sqdist**2/(2*alpha*length_scale**2))**-alpha
+    square_error=np.power(X1.reshape(-1,1)-X2.reshape(1,-1),2.0)
+    kernel=np.power(1+square_error/(2*alpha*length_scale**2),-alpha)
 
     return kernel
 
+def predict(x_line,X,y,K,beta,alpha=1,length_scale=1):
+    '''
+    vectorize calculate k_x_xstar !!
+    :param x_line: sampling in linspace(-60,60)
+    :param X:  (n) ndarray
+    :param y: (n) ndarray
+    :param K: (n,n) ndarray
+    :param beta:
+    :return: (len(x_line),1) ndarray, (len(x_line),len(x_line)) ndarray
+    '''
+    k_x_xstar=kernel(X,x_line,alpha=1,length_scale=1)
+    k_xstar_xstar=kernel(x_line,x_line,alpha=1,length_scale=1)
+    means=k_x_xstar.T @ np.linalg.inv(K) @ y.reshape(-1,1)
+    vars=k_xstar_xstar+(1/beta)*np.identity(len(k_xstar_xstar))-k_x_xstar.T @ np.linalg.inv(K) @ k_x_xstar
 
-def get_mus(x_line,x,y,kernel):
-    '''
-    :param x_line: sampling by linspace(-60,60)
-    :param x: datapoints x
-    :param y: datapoints y
-    :param kernel: (n,n) matrix
-    return: (len(x_line)) array
-    '''
-    n=len(x_line)
-    means=np.zeros(n)
-    for i in range(n):
-        k_x_xstar=kernel_function(x_line[i],x)
-        means[i]=k_x_xstar @ np.linalg.inv(kernel) @ y.reshape(-1,1)
-    return means
+    return means,vars
 
-def get_vars(x_line,x,kernel,beta):
-    '''
-    :param x_line: sampling by linspace(-60,60)
-    :param x: datapoints x
-    :param kernel: (n,n) matrix
-    :param beta: noise scalar
-    :return: (len(x_line)) array
-    '''
-    n=len(x_line)
-    variances=np.zeros(n)
-    for i in range(n):
-        k_x_xstar=kernel_function(x_line[i],x)
-        variances[i]=(kernel_function(x_line[i],x_line[i]) + 1/beta) + k_x_xstar @ np.linalg.inv(kernel) @ k_x_xstar.T
-    return variances
