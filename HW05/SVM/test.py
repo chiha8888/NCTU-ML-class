@@ -22,7 +22,7 @@ ax.xaxis.set_label_position('top')
 ax.set_yticklabels(['']+log2c)
 for i in range(len(log2c)):
     for j in range(len(log2g)):
-        ax.text(i,j,str(A[j,i]),va='center',ha='center')
+        ax.text(i,j,'{:.2f}'.format(A[j,i]),va='center',ha='center')
 ax.set_xlabel('lg(G)')
 ax.set_ylabel('lg(C)')
 plt.show()
