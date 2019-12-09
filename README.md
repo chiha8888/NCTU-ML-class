@@ -19,3 +19,7 @@ __EM alogo:__
   2. E-step也可向量化
   3. prior中容易有幾個class的prob變為0
   3. 正確率約4x\%
+
+## HW05
+GP參考: http://krasserm.github.io/2018/03/19/gaussian-processes/  
+libsvm參考: https://github.com/cjlin1/libsvm
