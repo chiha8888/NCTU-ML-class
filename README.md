@@ -23,3 +23,6 @@ __EM alogo:__
 ## HW05
 GP參考: http://krasserm.github.io/2018/03/19/gaussian-processes/  
 libsvm參考: https://github.com/cjlin1/libsvm
+
+## HW06
+eigenvalue & eigenvector: https://drive.google.com/drive/folders/1vpMZ8n42cQJmU54vu38uNZ542-dA6MJb?usp=sharing
