@@ -2,6 +2,10 @@
 2019 NCTU資工所 Machine Learning class  
 teacher:洪瑞鴻、邱維辰  
 
+notice:  
+作業有錯誤歡迎發issue與pull request修改 :)   
+write on 2020/04/15  
+
 ## HW04
 __logistic:__  
 * 對於gradient descent與newton's method，都要調learning rate (不同task要用不同learning rate)  
