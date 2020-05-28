@@ -3,9 +3,9 @@ from libsvm.svmutil import *
 from scipy.spatial.distance import cdist
 from load import load_x,load_y
 
-def precomputed_kernel(X, X_prime, gamma):
-    kernel_linear=X @ X_prime.T
-    kernel_RBF=np.exp(-gamma*cdist(X, X_prime, 'sqeuclidean'))
+def precomputed_kernel(X, X_, gamma):
+    kernel_linear=X @ X_.T
+    kernel_RBF=np.exp(-gamma*cdist(X, X_, 'sqeuclidean'))
     kernel=kernel_linear+kernel_RBF
     kernel=np.hstack((np.arange(1,len(X)+1).reshape(-1,1),kernel))
     return kernel
